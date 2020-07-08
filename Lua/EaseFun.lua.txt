@@ -1,0 +1,313 @@
+local math_pi = math.pi
+local assert = assert
+
+local M = {}
+
+M.EASE_TYPE = {
+    INSINE         = 1,
+    OUTSINE        = 2,
+    INOUTSINE      = 3,
+    INQUAD         = 4,
+    OUTQUAD        = 5,
+    INOUTQUAD      = 6,
+    INCUBIC        = 7,
+    OUTCUBIC       = 8,
+    INOUTCUBIC     = 9,
+    INQUART        = 10,
+    OUTQUART       = 11,
+    INOUTQUART     = 12,
+    INQUINT        = 13,
+    OUTQUINT       = 14,
+    INOUTQUINT     = 15,
+    INEXPO         = 16,
+    OUTEXPO        = 17,
+    INOUTEXPO      = 18,
+    INCIRC         = 19,
+    OUTCIRC        = 20,
+    INOUTCIRC      = 21,
+    INBACK         = 22,
+    OUTBACK        = 23,
+    INOUTBACK      = 24,
+    INELASTIC      = 25,
+    OUTELASTIC     = 26,
+    INOUTELASTIC   = 27,
+    INBOUNCE       = 28,
+    OUTBOUNCE      = 29,
+    INOUTBOUNCE    = 30,
+    LINE           = 1000,
+}
+
+local function isInt(number)
+    return math.floor(number) == number
+end
+
+local function pow(x, y)
+    -- assert(isInt(y), "y need int")
+    -- local num = 1
+    -- for i = 1, y do
+    --     num = num * x
+    -- end
+    local num = x ^ y
+    return num
+end
+
+local function sqrt(x)
+    return math.sqrt(x)
+end
+
+-- x -> [0, 1]
+
+function M.Excute(x, easeType)
+    if easeType == M.EASE_TYPE.INSINE then
+        return M.InSine(x)
+    elseif easeType == M.EASE_TYPE.OUTSINE then
+        return M.OutSine(x)
+    elseif easeType == M.EASE_TYPE.INOUTSINE then
+        return M.InOutSine(x)
+    elseif easeType == M.EASE_TYPE.INQUAD then
+        return M.InQuad(x)
+    elseif easeType == M.EASE_TYPE.OUTQUAD then
+        return M.OutQuad(x)
+    elseif easeType == M.EASE_TYPE.INOUTQUAD then
+        return M.InOutQuad(x)
+    elseif easeType == M.EASE_TYPE.INCUBIC then
+        return M.InCubic(x)
+    elseif easeType == M.EASE_TYPE.OUTCUBIC then
+        return M.OutCubic(x)
+    elseif easeType == M.EASE_TYPE.INOUTCUBIC then
+        return M.InOutCubic(x)
+    elseif easeType == M.EASE_TYPE.INQUART then
+        return M.InQuart(x)
+    elseif easeType == M.EASE_TYPE.OUTQUART then
+        return M.OutQuart(x)
+    elseif easeType == M.EASE_TYPE.INOUTQUART then
+        return M.InOutQuart(x)
+    elseif easeType == M.EASE_TYPE.INQUINT then
+        return M.InQuint(x)
+    elseif easeType == M.EASE_TYPE.OUTQUINT then
+        return M.OutQuint(x)
+    elseif easeType == M.EASE_TYPE.INOUTQUINT then
+        return M.InOutQuint(x)
+    elseif easeType == M.EASE_TYPE.INEXPO then
+        return M.InExpo(x)
+    elseif easeType == M.EASE_TYPE.OUTEXPO then
+        return M.OutExpo(x)
+    elseif easeType == M.EASE_TYPE.INOUTEXPO then
+        return M.InOutExpo(x)
+    elseif easeType == M.EASE_TYPE.INCIRC then
+        return M.InCirc(x)
+    elseif easeType == M.EASE_TYPE.OUTCIRC then
+        return M.OutCirc(x)
+    elseif easeType == M.EASE_TYPE.INOUTCIRC then
+        return M.InOutCirc(x)
+    elseif easeType == M.EASE_TYPE.INBACK then
+        return M.InBack(x)
+    elseif easeType == M.EASE_TYPE.OUTBACK then
+        return M.OutBack(x)
+    elseif easeType == M.EASE_TYPE.INOUTBACK then
+        return M.InOutBack(x)
+    elseif easeType == M.EASE_TYPE.INELASTIC then
+        return M.InElastic(x)
+    elseif easeType == M.EASE_TYPE.OUTELASTIC then
+        return M.OutElastic(x)
+    elseif easeType == M.EASE_TYPE.INOUTELASTIC then
+        return M.InOutElastic(x)
+    elseif easeType == M.EASE_TYPE.INBOUNCE then
+        return M.InBounce(x)
+    elseif easeType == M.EASE_TYPE.OUTBOUNCE then
+        return M.OutBounce(x)
+    elseif easeType == M.EASE_TYPE.INOUTBOUNCE then
+        return M.InOutBounce(x)
+    elseif easeType == M.EASE_TYPE.LINE then
+        return M.Line(x)
+    end
+    return x
+end
+
+-- INSINE         = 1,
+function M.InSine(x)
+    return 1 - math.cos((x * math_pi) / 2)
+end
+
+-- OUTSINE        = 2,
+function M.OutSine(x)
+    return math.sin((x * math_pi) / 2)
+end
+
+function M.OutSineInverse(x)
+    return (2 * math.asin(x)) / math_pi
+end
+
+-- INOUTSINE      = 3,
+function M.InOutSine(x)
+    return -(math.cos(math_pi * x) - 1) / 2
+end
+
+-- INQUAD         = 4,
+function M.InQuad(x)
+    return x * x
+end
+
+-- OUTQUAD        = 5,
+function M.OutQuad(x)
+    return 1 - (1 - x) * (1 - x)
+end
+
+-- INOUTQUAD      = 6,
+function M.InOutQuad(x)
+    return x < 0.5 and 2 * x * x or 1 - pow((-2 * x + 2), 2) / 2
+end
+
+-- INCUBIC        = 7,
+function M.InCubic(x)
+    return x * x * x
+end
+
+-- OUTCUBIC       = 8,
+function M.OutCubic(x)
+    return 1 - pow(1 - x, 3)
+end
+
+-- INOUTCUBIC     = 9,
+function M.InOutCubic(x)
+    return x < 0.5 and 4 * x * x * x or 1 - pow(-2 * x + 2, 3) / 2
+end
+
+-- INQUART        = 10,
+function M.InQuart(x)
+    return x * x * x * x
+end
+
+-- OUTQUART       = 11,
+function M.OutQuart(x)
+    return 1 - pow(1 - x, 4)
+end
+
+-- INOUTQUART     = 12,
+function M.InOutQuart(x)
+    return x < 0.5 and 8 * x * x * x * x or 1 - pow(-2 * x + 2, 4) / 2
+end
+
+-- INQUINT        = 13,
+function M.InQuint(x)
+    return x * x * x * x * x
+end
+
+-- OUTQUINT       = 14,
+function M.OutQuint(x)
+    return 1 - pow(1 - x, 5)
+end
+
+-- INOUTQUINT     = 15,
+function M.InOutQuint(x)
+    return x < 0.5 and 16 * x * x * x * x * x or 1 - pow(-2 * x + 2, 5) / 2
+end
+
+-- INEXPO         = 16,
+function M.InExpo(x)
+    return x == 0 and 0 or pow(2, 10 * x - 10)
+end
+
+-- OUTEXPO        = 17,
+function M.OutExpo(x)
+    return x == 1 and 1 or 1 - pow(2, -10 * x)
+end
+
+-- INOUTEXPO      = 18,
+function M.InOutExpo(x)
+    return x == 0 and 0 or (x == 1 and 1 or (x < 0.5 and pow(2, 20 * x - 10) / 2 or (2 - pow(2, -20 * x + 10)) / 2))
+end
+
+-- INCIRC         = 19,
+function M.InCirc(x)
+    return 1 - sqrt(1 - pow(x, 2))
+end
+
+-- OUTCIRC        = 20,
+function M.OutCirc(x)
+    return sqrt(1 - pow(x - 1, 2))
+end
+
+-- INOUTCIRC      = 21,
+function M.InOutCirc(x)
+    return x < 0.5 and (1 - sqrt(1 - pow(2 * x, 2))) / 2 or (sqrt(1 - pow(-2 * x + 2, 2)) + 1) / 2
+end
+
+-- INBACK         = 22,
+function M.InBack(x)
+    local c1 = 1.70158
+    local c3 = c1 + 1
+    return c3 * x * x * x - c1 * x * x
+end
+
+-- OUTBACK        = 23,
+function M.OutBack(x)
+    local c1 = 1.70158
+    local c3 = c1 + 1
+    return 1 + c3 * pow(x - 1, 3) + c1 * pow(x - 1, 2)
+end
+
+-- INOUTBACK      = 24,
+function M.InOutBack(x)
+    local c1 = 1.70158
+    local c2 = c1 * 1.525
+    return x < 0.5 and (pow(2 * x, 2) * ((c2 + 1) * 2 * x - c2)) / 2 or (pow(2 * x - 2, 2) * ((c2 + 1) * (x * 2 - 2) + c2) + 2) / 2
+end
+
+-- INELASTIC      = 25,
+function M.InElastic(x)
+    local c4 = (2 * math_pi) / 3
+    return x == 0 and 0 or (x == 1 and 1 or -pow(2, 10 * x - 10) * math.sin((x * 10 - 10.75) * c4))
+end
+
+-- OUTELASTIC     = 26,
+function M.OutElastic(x)
+    local c4 = (2 * math_pi) / 3
+    return x == 0 and 0 or (x == 1 and 1 or (pow(2, -10 * x) * sin((x * 10 - 0.75) * c4) + 1))
+end
+
+-- INOUTELASTIC   = 27,
+function M.InOutElastic(x)
+    local c5 = (2 * math_pi) / 4.5
+    return x == 0
+      and 0
+      or x == 1
+      and 1
+      or x < 0.5
+      and -(pow(2, 20 * x - 10) * math.sin((20 * x - 11.125) * c5)) / 2
+      or (pow(2, -20 * x + 10) * math.sin((20 * x - 11.125) * c5)) / 2 + 1
+end
+
+-- INBOUNCE       = 28,
+function M.InBounce(x)
+    return 1 - M.OutBounce(1 - x)
+end
+
+-- OUTBOUNCE      = 29,
+function M.OutBounce(x)
+    local n1 = 7.5625
+    local d1 = 2.75
+    if x < 1 / d1 then
+        return n1 * x * x
+    elseif x < 2 / d1 then
+        x = x - 1.5
+        return n1 * (x / d1) * x + 0.75
+    elseif x < 2.5 / d1 then
+        x = x - 2.25
+        return n1 * (x / d1) * x + 0.9375
+    else
+        x = x - 2.625
+        return n1 * (x / d1) * x + 0.984375
+    end
+end
+
+-- INOUTBOUNCE    = 30,
+function M.InOutBounce(x)
+    return x < 0.5 and (1 - M.EaseOutBounce(1 - 2 * x)) / 2 or (1 + M.EaseOutBounce(2 * x - 1)) / 2
+end
+
+function M.Line(x)
+    return x
+end
+
+return M
